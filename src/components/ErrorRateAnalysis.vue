@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 <template>
   <div class="error-rate-analysis">
-    <div class="data-container">
+    <div class="data-container" style="text-align: center;">
       <div class="data-title">误差率原始数据：</div>
-      <div class="data-content">{{ formattedData }}</div>
+      <div class="data-content" style="max-height: 50px; overflow-y: auto;">
+        {{ formattedData }}
+      </div>
     </div>
 
     <div ref="distributionChart" style="width: 800px; height: 400px;"></div>
@@ -391,6 +393,9 @@ export default {
 .error-rate-analysis {
   margin: 20px;
   font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .data-container {
@@ -398,11 +403,15 @@ export default {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 80%;
+  max-width: 800px;
 }
 
 .data-title {
   font-weight: bold;
   margin-bottom: 10px;
+  font-size: 1.2em;
+  color: #333;
 }
 
 .data-content {
@@ -411,23 +420,37 @@ export default {
   font-family: monospace;
   white-space: pre-wrap;
   word-break: break-all;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .stats-table {
   border-collapse: collapse;
-  width: 100%;
+  width: 80%;
+  max-width: 800px;
   margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .stats-table th,
 .stats-table td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px;
   text-align: left;
 }
 
 .stats-table th {
   background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.stats-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.stats-table tr:hover {
+  background-color: #f1f1f1;
 }
 
 .conclusion {
@@ -436,5 +459,8 @@ export default {
   background-color: #f8f9fa;
   border-radius: 4px;
   border-left: 4px solid #28a745;
+  width: 80%;
+  max-width: 800px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 </style> 
