@@ -60,6 +60,10 @@ export default {
   },
 
   computed: {
+    /**
+     * 将误差率数组格式化为字符串
+     * @returns {string} 格式化后的误差率字符串,保留4位小数,用逗号分隔
+     */
     formattedData() {
       return this.errorRates.map(value => value.toFixed(4)).join(', ')
     }
@@ -90,36 +94,57 @@ export default {
       this.stats = stats
     },
 
+    /**
+     * 绘制误差率分布图表
+     * 该方法计算误差率数据的正态分布曲线，并将其与实际误差率数据点一起绘制在图表中
+     */
     drawDistributionChart() {
+      // 获取误差率数据
       const data = this.errorRates
+      
+      // 计算数据的平均值
       const mean = data.reduce((a, b) => a + b, 0) / data.length
+      
+      // 计算数据的标准差
       const stdDev = Math.sqrt(
         data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / data.length
       )
-
+      
+      // 定义曲线上的点数
       const points = 100
+      // 初始化曲线数据数组
       const curveData = []
+      // 计算数据的最小值和最大值
       const min = Math.min(...data)
       const max = Math.max(...data)
+      // 计算数据范围
       const range = max - min
-
+      
+      // 生成正态分布曲线数据
       for (let i = 0; i < points; i++) {
+        // 计算x轴坐标
         const x = min - range * 0.2 + (range * 1.4 * i) / (points - 1)
+        // 计算y轴坐标，即概率密度
         const y = (1 / (stdDev * Math.sqrt(2 * Math.PI))) *
                  Math.exp(-Math.pow(x - mean, 2) / (2 * stdDev * stdDev))
+        // 将坐标点添加到曲线数据中
         curveData.push([x, y])
       }
-
+      
+      // 配置图表选项
       const option = {
+        // 设置图表标题
         title: {
           text: '误差率分布',
           left: 'center'
         },
+        // 设置工具提示
         tooltip: {
           trigger: 'item',
           axisPointer: {
             type: 'cross'
           },
+          // 自定义工具提示格式
           formatter: function(params) {
             if (Array.isArray(params)) params = params[0]
             if (params.seriesName === '误差率') {
@@ -129,16 +154,20 @@ export default {
             }
           }
         },
+        // 设置x轴配置
         xAxis: {
           type: 'value',
           name: '误差率'
         },
+        // 设置y轴配置
         yAxis: {
           type: 'value',
           name: '概率密度'
         },
+        // 定义图表系列
         series: [
           {
+            // 误差率数据序列
             name: '误差率',
             type: 'scatter',
             data: data.map(value => [value, 0]),
@@ -153,6 +182,7 @@ export default {
             }
           },
           {
+            // 正态分布曲线序列
             name: '正态分布',
             type: 'line',
             smooth: true,
@@ -164,10 +194,15 @@ export default {
           }
         ]
       }
-
+      
+      // 设置图表的配置项
       this.distributionChart.setOption(option)
     },
 
+    /**
+     * 绘制误差率分布图表
+     * 该方法计算误差率数据的正态分布曲线，并将其与实际误差率数据点一起绘制在图表中
+     */
     drawPieChart() {
       const option = {
         title: {
