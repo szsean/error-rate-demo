@@ -1,0 +1,46 @@
+/* 全局样式重置 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c4cc;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f2f5;
+}
+
+/* 链接样式 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 卡片通用样式 */
+.card {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+/* 图表容器通用样式 */
+.chart-container {
+  width: 100%;
+  height: 400px;
+  margin: 20px 0;
+} 
